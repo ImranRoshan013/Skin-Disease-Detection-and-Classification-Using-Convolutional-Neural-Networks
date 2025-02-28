@@ -34,7 +34,9 @@ The model is trained on the **ISIC 2019 dataset**, which contains 25,331 images.
 ---
 
 ## Dataset
-The dataset used in this project is the **ISIC 2019 Training Dataset**, which contains 25,331 images of skin lesions. The dataset is split into 8 classes, and the images are resized to 28x28 pixels for training.
+The dataset used in this project is the **ISIC 2019 Training Dataset**,which can be downloaded from [Kaggle](https://www.kaggle.com/datasets/salviohexia/isic-2019-skin-lesion-images-for-classification) and contains 25,331 images of skin lesions. The dataset is split into 8 classes, and the images are resized to 28x28 pixels for training.
+
+
 
 ### Dataset Summary
 - **Total Images**: 25,331
