@@ -34,9 +34,7 @@ The model is trained on the **ISIC 2019 dataset**, which contains 25,331 images.
 ---
 
 ## Dataset
-The dataset used in this project is the **ISIC 2019 Training Dataset**,which can be downloaded from [Kaggle](https://www.kaggle.com/datasets/salviohexia/isic-2019-skin-lesion-images-for-classification) and contains 25,331 images of skin lesions. The dataset is split into 8 classes, and the images are resized to 28x28 pixels for training.
-
-
+The dataset used in this project is the **ISIC 2019 Training Dataset**, which can be downloaded from [Kaggle](https://www.kaggle.com/datasets/salviohexia/isic-2019-skin-lesion-images-for-classification) and contains 25,331 images of skin lesions. The dataset is split into 8 classes, and the images are resized to 28x28 pixels for training.
 
 ### Dataset Summary
 - **Total Images**: 25,331
@@ -145,6 +143,26 @@ weighted avg       0.97      0.97      0.97     20600
 
 ---
 
+## Results
+### What You Did
+- **Data Preprocessing**: Resized images to 28x28 pixels, one-hot encoded labels, and balanced the dataset using random oversampling.
+- **Model Development**: Designed and trained a CNN model with 3 convolutional layers, batch normalization, dropout, and dense layers.
+- **Training**: Trained the model for 100 epochs using the Adam optimizer and categorical crossentropy loss.
+- **Evaluation**: Evaluated the model on a test set and reported accuracy, precision, recall, and F1-score.
+
+### Why You Did It
+- **Medical Application**: Skin lesion classification is crucial for early diagnosis and treatment of skin diseases. Automating this process can assist medical professionals in making faster and more accurate diagnoses.
+- **Class Imbalance**: The dataset had imbalanced classes, so random oversampling was used to ensure the model learns from all classes equally.
+- **Model Performance**: By using a CNN with batch normalization and dropout, we aimed to achieve high accuracy while preventing overfitting.
+
+### What Were the Results
+- **High Accuracy**: The model achieved a **test accuracy of 96.86%**, demonstrating its ability to classify skin lesions effectively.
+- **Strong Performance Across Classes**: The model performed exceptionally well for classes like AK, DF, SCC, and VASC, with precision and recall close to 1.
+- **Challenging Classes**: Classes like MEL and NV had slightly lower performance, likely due to their visual similarity in the dataset.
+- **Confusion Matrix**: The confusion matrix shows that the model makes very few misclassifications, with most errors occurring between visually similar classes like MEL and NV.
+
+---
+
 ## Usage
 To use this model, follow these steps:
 
@@ -183,12 +201,3 @@ Contributions to this project are welcome! If you have any improvements or sugge
 
 ## License
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
-
----
-
-### Output Explanation
-- The model achieves a **test accuracy of 96.86%**, indicating it performs well in classifying skin lesions.
-- The **confusion matrix** shows that the model performs exceptionally well for classes like AK, DF, SCC, and VASC, with precision and recall close to 1.
-- Classes like MEL and NV have slightly lower performance, which may be due to their visual similarity in the dataset.
-
----
