@@ -7,6 +7,10 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder
 from tensorflow.keras.utils import to_categorical
 from imblearn.over_sampling import RandomOverSampler
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Conv2D, MaxPooling2D, Flatten, Dense, Dropout, BatchNormalization
+from tensorflow.keras.regularizers import l2
+from tensorflow.keras.callbacks import ReduceLROnPlateau, EarlyStopping
 
 # Load and preprocess data
 def load_data():
@@ -47,3 +51,44 @@ def load_data():
     # Split into train and test sets
     X_train, X_test, y_train, y_test = train_test_split(X_resampled, y_resampled, test_size=0.2, random_state=42)
     return X_train, X_test, y_train, y_test
+
+# Define the model
+def create_model():
+    model = Sequential([
+        Conv2D(32, (3, 3), activation='relu', padding='same', kernel_initializer='he_normal', kernel_regularizer=l2(0.01), input_shape=(28, 28, 3)),
+        MaxPooling2D(),
+        BatchNormalization(),
+        Conv2D(64, (3, 3), activation='relu', padding='same', kernel_initializer='he_normal', kernel_regularizer=l2(0.01)),
+        MaxPooling2D(),
+        BatchNormalization(),
+        Conv2D(128, (3, 3), activation='relu', padding='same', kernel_initializer='he_normal', kernel_regularizer=l2(0.01)),
+        MaxPooling2D(),
+        BatchNormalization(),
+        Flatten(),
+        Dropout(0.5),
+        Dense(256, activation='relu', kernel_initializer='he_normal', kernel_regularizer=l2(0.01)),
+        BatchNormalization(),
+        Dense(128, activation='relu', kernel_initializer='he_normal', kernel_regularizer=l2(0.01)),
+        BatchNormalization(),
+        Dense(64, activation='relu', kernel_initializer='he_normal', kernel_regularizer=l2(0.01)),
+        BatchNormalization(),
+        Dense(8, activation='softmax')
+    ])
+    return model
+
+# Train the model
+def train():
+    X_train, X_test, y_train, y_test = load_data()
+    model = create_model()
+    model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
+    
+    callbacks = [
+        ReduceLROnPlateau(monitor='val_loss', patience=3, verbose=1),
+        EarlyStopping(monitor='val_loss', patience=5, restore_best_weights=True)
+    ]
+    
+    history = model.fit(X_train, y_train, validation_data=(X_test, y_test), epochs=100, batch_size=64, callbacks=callbacks)
+    model.save("ImranIsicModle.h5")
+
+if __name__ == '__main__':
+    train()
